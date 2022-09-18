@@ -1,13 +1,13 @@
 package com.edu.ulab.app.service;
 
-import com.edu.ulab.app.dto.UserDto;
+import com.edu.ulab.app.entity.User;
 
 public interface UserService {
-    UserDto createUser(UserDto userDto);
+    User createUser(User user);
 
-    UserDto updateUser(UserDto userDto);
+    User updateUser(User user);
 
-    UserDto getUserById(Long id);
+    User getUserById(Long id);
 
     void deleteUserById(Long id);
 }
