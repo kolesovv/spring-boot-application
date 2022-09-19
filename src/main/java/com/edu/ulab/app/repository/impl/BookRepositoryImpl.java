@@ -6,6 +6,7 @@ import com.edu.ulab.app.storage.Storage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -36,10 +37,12 @@ public class BookRepositoryImpl implements BookRepository {
   }
 
   @Override
-  public Book getBookById(Long id) {
+  public Optional<Book> getBookById(Long id) {
 
-    return storage.getStorageOfBooks()
+    Book book = storage.getStorageOfBooks()
         .get(id);
+
+    return Optional.ofNullable(book);
   }
 
   @Override

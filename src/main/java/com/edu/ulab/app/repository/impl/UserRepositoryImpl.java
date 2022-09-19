@@ -3,6 +3,7 @@ package com.edu.ulab.app.repository.impl;
 import com.edu.ulab.app.entity.User;
 import com.edu.ulab.app.repository.UserRepository;
 import com.edu.ulab.app.storage.Storage;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,10 +34,12 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User getUserById(Long id) {
+  public Optional<User> getUserById(Long id) {
 
-    return storage.getStorageOfUsers()
+    User user = storage.getStorageOfUsers()
         .get(id);
+
+    return Optional.ofNullable(user);
   }
 
   @Override

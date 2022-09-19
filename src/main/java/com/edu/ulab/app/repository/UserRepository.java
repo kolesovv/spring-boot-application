@@ -1,6 +1,7 @@
 package com.edu.ulab.app.repository;
 
 import com.edu.ulab.app.entity.User;
+import java.util.Optional;
 
 public interface UserRepository {
 
@@ -8,7 +9,7 @@ public interface UserRepository {
 
   User updateUser(User user);
 
-  User getUserById(Long id);
+  Optional<User> getUserById(Long id);
 
   void deleteUserById(Long id);
 
