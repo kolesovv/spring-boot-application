@@ -1,0 +1,58 @@
+package com.edu.ulab.app.repository.impl;
+
+import com.edu.ulab.app.entity.User;
+import com.edu.ulab.app.repository.UserRepository;
+import com.edu.ulab.app.storage.Storage;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class UserRepositoryImpl implements UserRepository {
+
+  @Autowired
+  Storage storage;
+
+  @Override
+  public User createUser(User user) {
+
+    storage.getStorageOfUsers()
+        .put(user.getId(), user);
+
+    return storage.getStorageOfUsers()
+        .get(user.getId());
+  }
+
+  @Override
+  public User updateUser(User user) {
+
+    storage.getStorageOfUsers()
+        .replace(user.getId(), user);
+
+    return storage.getStorageOfUsers()
+        .get(user.getId());
+  }
+
+  @Override
+  public Optional<User> getUserById(Long id) {
+
+    User user = storage.getStorageOfUsers()
+        .get(id);
+
+    return Optional.ofNullable(user);
+  }
+
+  @Override
+  public void deleteUserById(Long id) {
+
+    storage.getStorageOfUsers()
+        .remove(id);
+  }
+
+  @Override
+  public boolean existsById(Long id) {
+
+    return storage.getStorageOfUsers()
+        .containsKey(id);
+  }
+}
