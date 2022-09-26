@@ -13,40 +13,50 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-  private Long userId = 0L;
-
   @Autowired
   private UserRepository userRepository;
 
   @Override
   public User createUser(User user) {
 
-    Long generatedId = userId++;
-    user.setId(generatedId);
-    return userRepository.createUser(user);
+    log.info("Got user: {}", user);
+    User createdUser = userRepository.save(user);
+    log.info("Created user: {}", createdUser);
+    return createdUser;
   }
 
   @Override
   public User updateUser(User user) {
 
-    Long currentId = user.getId();
-    Optional<User> optionalUser = userRepository.getUserById(currentId);
+    log.info("Got user: {}", user);
+    if (user.getId() != null) {
+      Long currentId = user.getId();
+      Optional<User> optionalUser = userRepository.findById(currentId);
 
-    if (optionalUser.isPresent()) {
-      return userRepository.updateUser(user);
+      if (optionalUser.isPresent()) {
+        User updatedUser = userRepository.save(user);
+        log.info("Updated user: {}", updatedUser);
+        return updatedUser;
+      }
+      else {
+        throw new UserNotFoundException(currentId);
+      }
     }
     else {
-      throw new UserNotFoundException(currentId);
+      throw new UserNotFoundException(user.getId());
     }
   }
 
   @Override
   public User getUserById(Long id) {
 
-    Optional<User> optionalUser = userRepository.getUserById(id);
+    log.info("Got id user: {}", id);
+    Optional<User> optionalUser = userRepository.findById(id);
 
     if (optionalUser.isPresent()) {
-      return optionalUser.get();
+      User foundUser = optionalUser.get();
+      log.info("Found user: {}", foundUser);
+      return foundUser;
     }
     else {
       throw new UserNotFoundException(id);
@@ -56,10 +66,12 @@ public class UserServiceImpl implements UserService {
   @Override
   public void deleteUserById(Long id) {
 
-    Optional<User> optionalUser = userRepository.getUserById(id);
+    log.info("Got id user: {}", id);
+    Optional<User> optionalUser = userRepository.findById(id);
 
     if (optionalUser.isPresent()) {
-      userRepository.deleteUserById(id);
+      userRepository.deleteById(id);
+      log.info("Deleted user: {}", optionalUser.get());
     }
     else {
       throw new UserNotFoundException(id);

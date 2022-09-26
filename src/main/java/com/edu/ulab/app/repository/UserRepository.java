@@ -1,17 +1,8 @@
 package com.edu.ulab.app.repository;
 
 import com.edu.ulab.app.entity.User;
-import java.util.Optional;
+import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository {
+public interface UserRepository extends CrudRepository<User, Long> {
 
-  User createUser(User user);
-
-  User updateUser(User user);
-
-  Optional<User> getUserById(Long id);
-
-  void deleteUserById(Long id);
-
-  boolean existsById(Long id);
 }
