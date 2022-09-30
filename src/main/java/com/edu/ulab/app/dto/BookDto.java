@@ -8,7 +8,7 @@ import lombok.Data;
 public class BookDto {
 
   private Long id;
-  private Long userId;
+  private UserDto userDto;
   private String title;
   private String author;
   private long pageCount;

@@ -2,21 +2,17 @@ package com.edu.ulab.app.repository;
 
 import com.edu.ulab.app.entity.Book;
 import java.util.List;
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.CrudRepository;
 
-public interface BookRepository {
+public interface BookRepository extends CrudRepository<Book, Long> {
 
-  Book createBook(Book book);
+  @Transactional
+  @Query("DELETE FROM book b WHERE b.user_id:=id")
+  void deleteAllByUserId(Long id);
 
-  Book updateBook(Book book);
-
-  Optional<Book> getBookById(Long id);
-
-  void deleteBookById(Long id);
-
-  void deleteBooksByUserId(Long id);
-
-  boolean existById(Long id);
-
-  List<Book> getBookListByUserId(Long id);
+  @Transactional
+  @Query("SELECT * FROM book b WHERE user_id:=id")
+  List<Book> getAllByUserId(Long id);
 }
