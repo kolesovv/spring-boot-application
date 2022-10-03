@@ -27,6 +27,9 @@ import org.springframework.test.context.jdbc.Sql;
 @DisplayName("Testing user repository.")
 class UserRepositoryTest {
 
+  private Long userId;
+  private User existUser;
+
   @Autowired
   UserRepository userRepository;
 
@@ -36,13 +39,17 @@ class UserRepositoryTest {
     SQLStatementCountValidator.reset();
   }
 
-  private final Long userId = 1L;
-  private final User existUser = User.builder()
-      .id(userId)
-      .fullName("Antoni Gaudi")
-      .age(18)
-      .title("Architect")
-      .build();
+  @BeforeEach
+  public void createUser() {
+
+    userId = 1L;
+    existUser = User.builder()
+        .id(userId)
+        .fullName("Antoni Gaudi")
+        .age(18)
+        .title("Architect")
+        .build();
+  }
 
   @Rollback
   @Sql({"classpath:sql/1_clear_schema.sql",

@@ -11,6 +11,7 @@ import com.edu.ulab.app.service.impl.BookServiceImpl;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,22 +31,35 @@ import org.springframework.test.context.ActiveProfiles;
 @ExtendWith(MockitoExtension.class)
 class BookServiceImplTest {
 
-  private final Long userId = 1L;
-  private final User user = User.builder()
-      .id(userId)
-      .fullName("Antoni Gaudi")
-      .age(18)
-      .title("Architect")
-      .build();
+  private Long bookId;
+  private Long userId;
+  private Book book;
+  private User user;
 
-  private final Long bookId = 1L;
-  private final Book book = Book.builder()
-      .id(1L)
-      .title("Core Java Volume I Fundamentals")
-      .author("Cay S. Horstmann")
-      .user(user)
-      .pageCount(928L)
-      .build();
+  public void createUser() {
+
+    userId = 1L;
+    user = User.builder()
+        .id(userId)
+        .fullName("Antoni Gaudi")
+        .age(18)
+        .title("Architect")
+        .build();
+  }
+
+  @BeforeEach
+  public void createBook() {
+
+    createUser();
+    bookId = 1L;
+    book = Book.builder()
+        .id(bookId)
+        .title("Core Java Volume I Fundamentals")
+        .author("Cay S. Horstmann")
+        .user(user)
+        .pageCount(928L)
+        .build();
+  }
 
   @Captor
   ArgumentCaptor<Book> bookArgumentCaptor;
@@ -177,9 +191,6 @@ class BookServiceImplTest {
   @Test
   void deleteBooksByUserId_booksExist_booksIsDeleted() {
 
-    //GIVEN
-    Long userId = 1L;
-
     //WHEN
     bookService.deleteBooksByUserId(userId);
 
@@ -191,7 +202,6 @@ class BookServiceImplTest {
   void getBookListByUserId_booksExist_bookListIsReturned() {
 
     //GIVEN
-    Long userId = 1L;
     List<Book> bookList = Collections.singletonList(book);
     Mockito.when(bookRepository.getAllByUserId(userId)).thenReturn(bookList);
 

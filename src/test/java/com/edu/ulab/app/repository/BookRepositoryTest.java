@@ -28,22 +28,35 @@ class BookRepositoryTest {
   @Autowired
   BookRepository bookRepository;
 
-  private final Long userId = 1L;
-  private final User existUser = User.builder()
-      .id(userId)
-      .fullName("Antoni Gaudi")
-      .age(18)
-      .title("Architect")
-      .build();
+  private Long bookId;
+  private Long userId;
+  private Book existBook;
+  private User existUser;
 
-  private final Long bookId = 1L;
-  private final Book existBook = Book.builder()
-      .id(1L)
-      .title("Core Java Volume I Fundamentals")
-      .author("Cay S. Horstmann")
-      .user(existUser)
-      .pageCount(928L)
-      .build();
+  public void createUser() {
+
+    userId = 1L;
+    existUser = User.builder()
+        .id(userId)
+        .fullName("Antoni Gaudi")
+        .age(18)
+        .title("Architect")
+        .build();
+  }
+
+  @BeforeEach
+  public void createBook() {
+
+    createUser();
+    bookId = 1L;
+    existBook = Book.builder()
+        .id(bookId)
+        .title("Core Java Volume I Fundamentals")
+        .author("Cay S. Horstmann")
+        .user(existUser)
+        .pageCount(928L)
+        .build();
+  }
 
   @BeforeEach
   void setUp() {

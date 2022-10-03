@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/changeset/create-table-book.sql
   - include:
       file: db/changelog/changeset/create-sequence.sql
+  - include:
+      file: db/changelog/changeset/add-field-phone-for-person.yml

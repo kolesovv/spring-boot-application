@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: phone_field
+      author: Kolesov S.N.
+      changes:
+        - addColumn:
+            schemaName: ulab_edu
+            tableName: person
+            columns:
+              - column:
+                  name: phone
+                  type: varchar(50)

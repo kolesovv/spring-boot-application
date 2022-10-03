@@ -8,6 +8,7 @@ import com.edu.ulab.app.exception.UserNotFoundException;
 import com.edu.ulab.app.repository.UserRepository;
 import com.edu.ulab.app.service.impl.UserServiceImpl;
 import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,13 +28,20 @@ import org.springframework.test.context.ActiveProfiles;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-  private final Long userId = 1L;
-  private final User user = User.builder()
-      .id(userId)
-      .fullName("Antoni Gaudi")
-      .age(18)
-      .title("Architect")
-      .build();
+  private Long userId;
+  private User user;
+
+  @BeforeEach
+  public void createUser() {
+
+    userId = 1L;
+    user = User.builder()
+        .id(userId)
+        .fullName("Antoni Gaudi")
+        .age(18)
+        .title("Architect")
+        .build();
+  }
 
   @Captor
   ArgumentCaptor<User> userArgumentCaptor;
