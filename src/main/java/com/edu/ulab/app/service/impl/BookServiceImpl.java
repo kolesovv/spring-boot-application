@@ -2,7 +2,6 @@ package com.edu.ulab.app.service.impl;
 
 import com.edu.ulab.app.entity.Book;
 import com.edu.ulab.app.exception.BookNotFoundException;
-import com.edu.ulab.app.exception.NotFoundException;
 import com.edu.ulab.app.repository.BookRepository;
 import com.edu.ulab.app.service.BookService;
 import java.util.List;
@@ -84,13 +83,8 @@ public class BookServiceImpl implements BookService {
   public void deleteBooksByUserId(Long id) {
 
     log.info("Got id user: {}", id);
-    try {
-      bookRepository.deleteAllByUserId(id);
-      log.info("Books by user id is deleted");
-    }
-    catch (NotFoundException ex) {
-      throw new NotFoundException("Books for user id " + id + " doesn't exist");
-    }
+    bookRepository.deleteAllByUserId(id);
+    log.info("Books by user id is deleted");
   }
 
   @Override

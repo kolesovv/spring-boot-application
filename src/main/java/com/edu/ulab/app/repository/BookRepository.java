@@ -9,10 +9,10 @@ import org.springframework.data.repository.CrudRepository;
 public interface BookRepository extends CrudRepository<Book, Long> {
 
   @Transactional
-  @Query("DELETE FROM book b WHERE b.user_id:=id")
+  @Query("DELETE FROM ulab_edu.book b WHERE b.user_id:=id")
   void deleteAllByUserId(Long id);
 
   @Transactional
-  @Query("SELECT * FROM book b WHERE user_id:=id")
+  @Query("SELECT * FROM ulab_edu.book b WHERE user_id:=id")
   List<Book> getAllByUserId(Long id);
 }
